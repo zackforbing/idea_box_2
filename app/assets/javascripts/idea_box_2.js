@@ -2,6 +2,7 @@ $(document).ready(function() {
 
   fetchIdeas();
   fetchIdeasButton();
+  createPost();
 
 });
 
@@ -23,8 +24,10 @@ function createIdeaHTML(idea) {
   + idea.id
   + "'><h3>"
   + idea.title
-  + "</h3><p>"
-  + idea.description
+  + "</h3><h6>"
+  + idea.quality
+  + "</h6><p>"
+  + idea.body
   + "</p>"
   + "<button id='delete-idea' name='button-fetch' class='btn btn-default btn-xs'>Delete Idea</button>"
   + "</div>")
