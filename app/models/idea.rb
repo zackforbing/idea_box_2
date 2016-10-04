@@ -1,4 +1,4 @@
 class Idea < ApplicationRecord
 
-  enum role: %w(swill plausible genius)
+  enum quality: %w(swill plausible genius)
 end
