@@ -2,7 +2,7 @@ $(document).ready(function() {
 
   fetchIdeas();
   fetchIdeasButton();
-  createPost();
+  createIdea();
 
 });
 
@@ -38,7 +38,7 @@ function renderIdeas(ideasData) {
 };
 
 function renderIdea(ideaData) {
-  $("#all-ideas").append(ideaData);
+  $("#all-ideas").prepend(ideaData);
 };
 
 function fetchIdeasButton() {
@@ -52,10 +52,8 @@ function handleError(error) {
 function createIdea() {
   $("#create-idea").on("click", function() {
     var ideaParams = {
-      idea: {
         title: $("#idea-title").val(),
         body: $("#idea-body").val()
-      }
     }
     $.post(
       "api/v1/ideas",
