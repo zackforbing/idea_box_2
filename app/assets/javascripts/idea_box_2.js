@@ -11,6 +11,7 @@ function fetchIdeas() {
     type: "get"
   }).then(collectIdeas)
   .then(renderIdeas)
+  .fail(handleError)
 };
 
 function collectIdeas(ideasData) {
@@ -39,4 +40,26 @@ function renderIdea(ideaData) {
 
 function fetchIdeasButton() {
   $("button[name=button-fetch]").on("click", fetchIdeas);
+};
+
+function handleError(error) {
+  console.log(error);
+};
+
+function createIdea() {
+  $("#create-idea").on("click", function() {
+    var ideaParams = {
+      idea: {
+        title: $("#idea-title").val(),
+        body: $("#idea-body").val()
+      }
+    }
+    $.post(
+      "api/v1/ideas",
+      ideaParams
+    )
+    .then(createIdeaHTML)
+    .then(renderIdea)
+    .fail(handleError)
+  })
 };
