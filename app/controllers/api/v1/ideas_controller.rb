@@ -3,11 +3,16 @@ class Api::V1::IdeasController < ApplicationController
   respond_to :json
 
   def index
-    respond_with Idea.all.reverse
+    render json: Idea.all.reverse
   end
 
   def create
     render json: Idea.create(idea_params)
+  end
+
+  def destroy
+    Idea.find(params[:id]).destroy
+    render nothing: true, status:  204
   end
 
   private
