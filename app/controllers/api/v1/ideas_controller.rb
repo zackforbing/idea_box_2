@@ -3,11 +3,11 @@ class Api::V1::IdeasController < ApplicationController
   respond_to :json
 
   def index
-    respond_with Idea.all
+    respond_with Idea.all.reverse
   end
 
   def create
-    respond_with Idea.new(idea_params)
+    render json: Idea.create(idea_params)
   end
 
   private
