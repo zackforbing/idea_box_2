@@ -3,6 +3,7 @@ $(document).ready(function() {
   fetchIdeas();
   fetchIdeasButton();
   createIdea();
+  deleteIdea();
 
 });
 
@@ -15,6 +16,14 @@ function fetchIdeas() {
   .fail(handleError)
 };
 
+function stringTruncate(string, length) {
+  if (string.length > length) {
+    return string.substr(0, string.lastIndexOf(' ', length)) + " ...";
+  } else {
+    return string;
+  }
+};
+
 function collectIdeas(ideasData) {
   return ideasData.map(createIdeaHTML);
 };
@@ -23,11 +32,11 @@ function createIdeaHTML(idea) {
   return $("<div class='idea' data-id='"
   + idea.id
   + "'><h3>"
-  + idea.title
+  + stringTruncate(idea.title, 50)
   + "</h3><h6>"
   + idea.quality
   + "</h6><p>"
-  + idea.body
+  + stringTruncate(idea.body, 100)
   + "</p>"
   + "<button id='delete-idea' name='button-fetch' class='btn btn-default btn-xs'>Delete Idea</button>"
   + "</div>")
@@ -54,7 +63,9 @@ function createIdea() {
     var ideaParams = {
         title: $("#idea-title").val(),
         body: $("#idea-body").val()
-    }
+    };
+    $("#idea-title").val('');
+    $("#idea-body").val('');
     $.post(
       "api/v1/ideas",
       ideaParams
@@ -64,3 +75,15 @@ function createIdea() {
     .fail(handleError)
   })
 };
+
+function deleteIdea() {
+  $("#all-ideas").on("click", "#delete-idea", function() {
+    var $idea = $(this).closest(".idea")
+    $.ajax( {
+      url: "api/v1/ideas/" + $idea.data("id"),
+      type: "delete"
+    }).then(function() {
+      $idea.remove()
+    }).fail(handleError)
+  })
+}
