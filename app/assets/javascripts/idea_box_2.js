@@ -31,15 +31,29 @@ function collectIdeas(ideasData) {
 function createIdeaHTML(idea) {
   return $("<div class='idea' data-id='"
   + idea.id
-  + "'><h3>"
+  + "'><h3 class='editable-title' contenteditable='true'>"
   + stringTruncate(idea.title, 50)
   + "</h3><h6>"
   + idea.quality
-  + "</h6><p>"
+  + "</h6><p class='editable-body' contenteditable='true'>"
   + stringTruncate(idea.body, 100)
   + "</p>"
   + "<button id='delete-idea' name='button-fetch' class='btn btn-default btn-xs'>Delete Idea</button>"
   + "</div>")
+};
+
+function updateIdea() {
+  $(".editable-title", ".editable-body").on("blur", function() {
+      var ideaParams = {
+        title: $(this).parent().find(".editable-title").val(),
+        body: $(this).parent().find(".editable-body").val()
+    };
+    $.put(
+      "api/v1/ideas",
+      ideaParams
+    )
+    .fail(handleError)
+  })
 };
 
 function renderIdeas(ideasData) {
@@ -64,8 +78,7 @@ function createIdea() {
         title: $("#idea-title").val(),
         body: $("#idea-body").val()
     };
-    $("#idea-title").val('');
-    $("#idea-body").val('');
+    clearTextFields();
     $.post(
       "api/v1/ideas",
       ideaParams
@@ -74,6 +87,11 @@ function createIdea() {
     .then(renderIdea)
     .fail(handleError)
   })
+};
+
+function clearTextFields() {
+  $("#idea-title").val('');
+  $("#idea-body").val('');
 };
 
 function deleteIdea() {
