@@ -2,7 +2,6 @@ $(document).ready(function() {
 
   var $ideas = [];
   fetchIdeas();
-  fetchIdeasButton();
   createIdea();
   deleteIdea();
   searchFilter();
@@ -34,7 +33,9 @@ function collectIdeas(ideasData) {
 };
 
 function createIdeaHTML(idea) {
-  return $("<div class='idea' data-id='"
+  return $("<div class='idea' id='idea-"
+  + idea.id
+  + "' data-id='"
   + idea.id
   + "'><h3 class='editable-title' contenteditable='true'>"
   + stringTruncate(idea.title, 50)
@@ -63,10 +64,6 @@ function addIdeaUpdateListeners() {
   updateIdea();
   upvoteIdea();
   downvoteIdea();
-};
-
-function fetchIdeasButton() {
-  $("button[name=button-fetch]").on("click", fetchIdeas);
 };
 
 function handleError(error) {

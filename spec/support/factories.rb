@@ -1,3 +1,10 @@
 FactoryGirl.define do
-  # Add individual factories here - https://github.com/thoughtbot/factory_girl
+  factory :idea do
+    title
+    body 'this is an idea bro'
+  end
+
+  sequence :title do |num|
+    "this is idea ##{num}"
+  end
 end
