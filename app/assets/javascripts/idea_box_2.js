@@ -146,13 +146,13 @@ function deleteIdea() {
 }
 
 function searchFilter() {
-  $("#search-ideas").on("keyup", function(query) {
-    var matches = search(query.target.value)
-    var matchedIdeasHTML = matches.map(function(idea) {
-      return createIdeaHTML(idea)
-    })
-    renderIdeas(matchedIdeasHTML);
+$("#search-ideas").on("keyup", function(query) {
+  var matches = search(query.target.value)
+  var matchedIdeasHTML = matches.map(function(idea) {
+    return createIdeaHTML(idea)
   })
+  renderIdeas(matchedIdeasHTML);
+})
 };
 
 function search(query) {
