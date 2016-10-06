@@ -1,14 +1,16 @@
 <div class="container-fluid">
-  <div class="col-sm-2"></div>
-  <h1>Create A New Idea</h1>
+  <div class="row">
+    <div class="col-sm-2 col-md-2"></div>
+      <div class="col-sm-4 col-md-4">
+        <h1>Create A New Idea</h1>
+      </div>
+  </div>
 
   <div class="row">
     <div class="col-sm-2 col-md-2"></div>
     <form>
-      <div class="form-group">
+      <div class="form-group col-sm-4 col-md-4">
         <input class="form-control" type="text" id="idea-title" placeholder="Title">
-      </div>
-      <div class="form-group">
         <textarea class="form-control" rows="3" id="idea-body" placeholder="Body"></textarea>
       </div>
       <div class="col-sm-4 col-md-4">
@@ -24,9 +26,6 @@
       <h1>Latest Ideas</h3>
       <div id="all-ideas">
       </div>
-    </div>
-    <div class="col-sm-4 col-md-4">
-      <button name="button-fetch" class="btn btn-default pull-right">Fetch Ideas</button>
     </div>
     <div class="col-sm-2 col-md-2"></div>
   </div>

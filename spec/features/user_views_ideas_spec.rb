@@ -7,16 +7,12 @@ describe "User sees a list of ideas" do
 
     visit '/'
 
-    within('div#all-ideas.idea') do
+    within('#all-ideas div:nth-child(1)') do
       require "pry"; binding.pry
-      expect(page).to have_css('#idea-2')
-      expect(page).to have_content('this is idea #2')
+      # expect(page).to have_css('#idea-2')
+      expect(page).to have_content('idea #2')
       expect(page).to have_content('swill')
       expect(page).to have_content('Spicy jalapeno bacon ipsum dolor amet meatloaf ham hock picanha short ribs, shoulder biltong pork ...')
     end
   end
 end
-
-# * See a list of all existing ideas, including the title, body, and quality for each idea. (2 points, mandatory for specification adherence)
-# * Idea bodies longer than 100 characters should be truncated to the nearest word. (5 points)
-# * Ideas should appear in descending chronological order (with the most recently created idea at the top). (3 points)

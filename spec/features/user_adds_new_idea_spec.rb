@@ -14,7 +14,7 @@ describe "User adds a new idea" do
       click_on 'Save'
 
       within('div#all-ideas') do
-        expect(page).to have_css('#idea-1')
+        expect(page).to have_css('#idea-2')
         expect(page).to have_content('dat title')
         expect(page).to have_content('fffffffffffffffffffffffff')
       end
@@ -30,7 +30,7 @@ describe "User adds a new idea" do
       visit '/'
 
       within('div#all-ideas') do
-        expect(page).to have_css('#idea-1')
+        expect(page).to have_css('#idea-2')
         expect(page).to have_content('dat title')
         expect(page).to have_content('fffffffffffffffffffffffff')
       end
