@@ -51,13 +51,15 @@ function createIdeaHTML(idea) {
 
 function renderIdeas(ideasData) {
   $("#all-ideas").html(ideasData);
-  updateIdea();
-  upvoteIdea();
-  downvoteIdea();
+  addIdeaUpdateListeners();
 };
 
 function renderIdea(ideaData) {
   $("#all-ideas").prepend(ideaData);
+  addIdeaUpdateListeners();
+};
+
+function addIdeaUpdateListeners() {
   updateIdea();
   upvoteIdea();
   downvoteIdea();
@@ -86,6 +88,11 @@ function createIdea() {
     .then(renderIdea)
     .fail(handleError)
   })
+};
+
+function clearTextFields() {
+  $("#idea-title").val('');
+  $("#idea-body").val('');
 };
 
 function updateIdea() {
@@ -128,11 +135,6 @@ function downvoteIdea() {
   })
 };
 
-function clearTextFields() {
-  $("#idea-title").val('');
-  $("#idea-body").val('');
-};
-
 function deleteIdea() {
   $("#all-ideas").on("click", "#delete-idea", function() {
     var $idea = $(this).closest(".idea")
@@ -146,13 +148,13 @@ function deleteIdea() {
 }
 
 function searchFilter() {
-  $("#search-ideas").on("keyup", function(query) {
-    var matches = search(query.target.value)
-    var matchedIdeasHTML = matches.map(function(idea) {
-      return createIdeaHTML(idea)
-    })
-    renderIdeas(matchedIdeasHTML);
+$("#search-ideas").on("keyup", function(query) {
+  var matches = search(query.target.value)
+  var matchedIdeasHTML = matches.map(function(idea) {
+    return createIdeaHTML(idea)
   })
+  renderIdeas(matchedIdeasHTML);
+})
 };
 
 function search(query) {
