@@ -34,7 +34,7 @@ function collectIdeas(ideasData) {
 };
 
 function createIdeaHTML(idea) {
-  return $("<div class='idea' data-id='"
+  return $("<div id='idea-"
   + idea.id
   + "'><h3 class='editable-title' contenteditable='true'>"
   + stringTruncate(idea.title, 50)
