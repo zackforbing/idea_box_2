@@ -16,8 +16,10 @@ class Api::V1::IdeasController < ApplicationController
   end
 
   def update
-    Idea.find(params[:id])
-    
+    Idea.find(params[:id]).update_attributes(idea_params)
+    render nothing: true, status: 204
+  end
+
   private
 
     def idea_params

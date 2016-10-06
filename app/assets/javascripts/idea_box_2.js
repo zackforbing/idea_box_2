@@ -42,26 +42,14 @@ function createIdeaHTML(idea) {
   + "</div>")
 };
 
-function updateIdea() {
-  $(".editable-title", ".editable-body").on("blur", function() {
-      var ideaParams = {
-        title: $(this).parent().find(".editable-title").val(),
-        body: $(this).parent().find(".editable-body").val()
-    };
-    $.put(
-      "api/v1/ideas",
-      ideaParams
-    )
-    .fail(handleError)
-  })
-};
-
 function renderIdeas(ideasData) {
   $("#all-ideas").html(ideasData);
+  updateIdea();
 };
 
 function renderIdea(ideaData) {
   $("#all-ideas").prepend(ideaData);
+  updateIdea();
 };
 
 function fetchIdeasButton() {
@@ -85,6 +73,22 @@ function createIdea() {
     )
     .then(createIdeaHTML)
     .then(renderIdea)
+    .fail(handleError)
+  })
+};
+
+function updateIdea() {
+  $(".editable-title, .editable-body").on("blur", function() {
+    var $idea = $(this).closest(".idea")
+    var ideaParams = {
+      title: $(this).parent().find(".editable-title").html(),
+      body: $(this).parent().find(".editable-body").html()
+    };
+    $.ajax( {
+      url: "api/v1/ideas/" + $idea.data("id"),
+      data: ideaParams,
+      type: "put"
+    })
     .fail(handleError)
   })
 };
