@@ -3,7 +3,7 @@ class Api::V1::IdeasController < ApplicationController
   respond_to :json
 
   def index
-    render json: Idea.all.reverse
+    render json: Idea.all.order(id: :desc)
   end
 
   def create
@@ -16,13 +16,20 @@ class Api::V1::IdeasController < ApplicationController
   end
 
   def update
-    Idea.find(params[:id]).update_attributes(idea_params)
-    render nothing: true, status: 204
+    idea = Idea.find(params[:id])
+    if params[:upvote]
+      idea.upvote
+    elsif params[:downvote]
+      idea.downvote
+    else
+      idea.update_attributes(idea_params)
+      render json: idea
+    end
   end
 
   private
 
     def idea_params
-      params.permit(:title, :body)
+      params.permit(:title, :body, :upvote, :downvote)
     end
 end

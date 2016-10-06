@@ -39,17 +39,23 @@ function createIdeaHTML(idea) {
   + stringTruncate(idea.body, 100)
   + "</p>"
   + "<button id='delete-idea' name='button-fetch' class='btn btn-default btn-xs'>Delete Idea</button>"
+  + "<button name='button-upvote' class='btn btn-default btn-xs upvote'><span class='glyphicon glyphicon-plus-sign'</span></button>"
+  + "<button name='button-downvote' class='btn btn-default btn-xs downvote'><span class='glyphicon glyphicon-minus-sign'</span></button>"
   + "</div>")
 };
 
 function renderIdeas(ideasData) {
   $("#all-ideas").html(ideasData);
   updateIdea();
+  upvoteIdea();
+  downvoteIdea();
 };
 
 function renderIdea(ideaData) {
   $("#all-ideas").prepend(ideaData);
   updateIdea();
+  upvoteIdea();
+  downvoteIdea();
 };
 
 function fetchIdeasButton() {
@@ -89,6 +95,30 @@ function updateIdea() {
       data: ideaParams,
       type: "put"
     })
+    .fail(handleError)
+  })
+};
+
+function upvoteIdea() {
+  $(".upvote").on("click", function () {
+    var $idea = $(this).closest(".idea")
+    $.ajax( {
+      url: "api/v1/ideas/" + $idea.data("id"),
+      data: { "upvote": true },
+      type: "put"
+    }).then(fetchIdeas)
+    .fail(handleError)
+  })
+};
+
+function downvoteIdea() {
+  $(".downvote").on("click", function () {
+    var $idea = $(this).closest(".idea")
+    $.ajax( {
+      url: "api/v1/ideas/" + $idea.data("id"),
+      data: { "downvote": true },
+      type: "put"
+    }).then(fetchIdeas)
     .fail(handleError)
   })
 };
