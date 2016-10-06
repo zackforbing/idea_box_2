@@ -1,16 +1,21 @@
 $(document).ready(function() {
 
+  var $ideas = [];
   fetchIdeas();
   fetchIdeasButton();
   createIdea();
   deleteIdea();
+  searchFilter();
 
 });
 
 function fetchIdeas() {
   $.ajax({
     url: "/api/v1/ideas",
-    type: "get"
+    type: "get",
+    success: function(response) {
+      $ideas = response
+    }
   }).then(collectIdeas)
   .then(renderIdeas)
   .fail(handleError)
@@ -139,3 +144,23 @@ function deleteIdea() {
     }).fail(handleError)
   })
 }
+
+function searchFilter() {
+  $("#search-ideas").on("keyup", function(query) {
+    var matches = search(query.target.value)
+    var matchedIdeasHTML = matches.map(function(idea) {
+      return createIdeaHTML(idea)
+    })
+    renderIdeas(matchedIdeasHTML);
+  })
+};
+
+function search(query) {
+  if (query) {
+    return $ideas.filter(function(idea) {
+      return idea.title.toLowerCase().includes(query.toLowerCase()) || idea.body.toLowerCase().includes(query.toLowerCase());
+    })
+  } else {
+    return $ideas;
+  }
+};
