@@ -51,13 +51,15 @@ function createIdeaHTML(idea) {
 
 function renderIdeas(ideasData) {
   $("#all-ideas").html(ideasData);
-  updateIdea();
-  upvoteIdea();
-  downvoteIdea();
+  addIdeaUpdateListeners();
 };
 
 function renderIdea(ideaData) {
   $("#all-ideas").prepend(ideaData);
+  addIdeaUpdateListeners();
+};
+
+function addIdeaUpdateListeners() {
   updateIdea();
   upvoteIdea();
   downvoteIdea();
@@ -86,6 +88,11 @@ function createIdea() {
     .then(renderIdea)
     .fail(handleError)
   })
+};
+
+function clearTextFields() {
+  $("#idea-title").val('');
+  $("#idea-body").val('');
 };
 
 function updateIdea() {
@@ -126,11 +133,6 @@ function downvoteIdea() {
     }).then(fetchIdeas)
     .fail(handleError)
   })
-};
-
-function clearTextFields() {
-  $("#idea-title").val('');
-  $("#idea-body").val('');
 };
 
 function deleteIdea() {
